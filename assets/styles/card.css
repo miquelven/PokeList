@@ -1,0 +1,70 @@
+.card{
+    color:#fff;
+    border: 1px solid #000;
+    background: linear-gradient(129deg, rgba(244,217,217,1) 10%, rgba(179,5,5,0.7133620689655172) 35%, rgba(7,117,190,0.5086206896551724) 65%, rgba(216,232,242,1) 90%);
+    border-radius: 10px;
+    width:  200px;
+    height: 300px;
+    box-shadow: 8px 8px 10px #000000;
+    padding:15px 3px;
+    display: flex;
+    flex-direction:column;
+    justify-content: space-between;
+    align-items: center;
+    transition: all linear 100ms;
+    cursor: pointer;
+}
+
+.card h1{
+    color:#ffffff;
+    max-width: 15ch;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow:hidden;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    transition: font-size linear 100ms
+}
+
+.card .imgArea{
+    height:200px;
+    width: 200px;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    /* overflow:hidden */
+}
+
+
+.card .imgArea img{
+    width: 300px;
+    transition: all linear 100ms;
+}
+
+.card .type{
+    display: flex;
+    gap: 10px;;
+    transition: all linear 100ms
+}
+
+.card .type img{
+    height:30px;
+
+}
+
+.cardOver{
+    width: 195px;
+    height: 295px;
+    filter: brightness(1.05);
+    border: 15px double #9b9a9a;
+    border-radius:20px;
+    box-shadow: 15px 15px 45px #000000 inset;   
+}
+
+.card.cardOver h1{
+    font-size:1.1rem
+}
+.card.cardOver .type{
+    transform: scale(.85);
+    filter: brightness(.85)
+}

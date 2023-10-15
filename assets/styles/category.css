@@ -1,0 +1,40 @@
+main{
+    display: flex;
+    flex-direction:column;
+    justify-content: space-between;
+    align-items: center;
+    position:relative
+}
+
+.totalNumberPokemons{
+    align-self: flex-start;
+}
+
+.filtersArea{
+    /* display: flex;
+    flex-direction: column; */
+    gap:50px;
+    max-width: 90px;
+    word-wrap: break-word;
+    /* height:700px; */
+    padding: 20px 0px;
+    border-top: 1px solid #000;
+    align-items: center;
+    position: absolute;
+    left: -12%;
+    background-color:#f00;
+}
+
+.filtersArea .filters{  
+    /* filtros aqui */
+}
+
+.listPokemons{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+    gap:30px;
+    align-self: flex-end;
+    
+}
