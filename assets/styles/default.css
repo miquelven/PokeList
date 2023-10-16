@@ -33,6 +33,7 @@ header {
 
 header h1 {
     font-size: 3rem;
+    cursor:pointer;
     /* colocar cor diferente blue e red */
 }
 

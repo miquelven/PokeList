@@ -15,8 +15,8 @@ const lis = document.querySelectorAll('ul li');
 let nameParams, valueParams = '';
 
 const navigateNewPage = () => {
-  
-  window.location.href = `pages/category/${nameParams}.html?${nameParams}=${valueParams}`
+  //colocar search no lugar de category
+  window.location.href = `pages/search/search.html?${nameParams}=${valueParams}`
 }
 
 const getParams = () => {

@@ -73,7 +73,7 @@ function setInfos() {
 
     rightSideArea.querySelector("#pokemonWeight").innerHTML = pokemonWeight;
     rightSideArea.querySelector("#pokemonId").innerHTML = pokemonNumberPokedex;
-    rightSideArea.querySelector("#pokemonSkills").innerHTML = `${pokemonSkills[0]} e ${pokemonSkills[1]}` ;
+    rightSideArea.querySelector("#pokemonSkills").innerHTML = `${pokemonSkills[0]}, ${pokemonSkills[1]}` ;
 }
 
 const buttonElement = document.querySelector(".rightSide button")
