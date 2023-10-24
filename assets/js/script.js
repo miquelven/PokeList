@@ -17,12 +17,15 @@ let nameParams, valueParams = '';
 const navigateNewPage = () => {
   //colocar search no lugar de category
   window.location.href = `pages/search/search.html?${nameParams}=${valueParams}`
+  console.log(window.location.href)
 }
 
 const getParams = () => {
   const url = new URL(window.location.href);
 
+
   const params = url.searchParams;
+  console.log(params + "PARAMS")
   const paramsString = Array.from(params).map(entry => `${entry[0]} ${entry[1]}`).join(', ');
   nameParams = paramsString.split(' ')[0]
   valueParams = paramsString.split(' ')[1]
@@ -32,12 +35,52 @@ const getParams = () => {
 
 const changeURL = (name, value) => {
   const url = new URL(window.location.href);
+  if (value == 'favorites') {
+    console.log(url)
+    
+    // URL base do seu aplicativo
+var baseUrl = "http://127.0.0.1:5500";
 
-  url.searchParams.set(name, value);
+// Nova URL relativa
+var novaUrl = "/pages/favorites/favoritePage.html";
 
-  window.history.pushState({}, '', url.toString());
+// Use o objeto URL para criar uma URL absoluta
+var urlAbsoluta = new URL(novaUrl, baseUrl);
 
-  getParams()
+// Atualize a localização para a nova URL absoluta
+window.location.href = urlAbsoluta.href;
+
+    // CHATGPT SEU LINDO!!!
+
+  } else if (name == 'search') {
+    var baseUrl = "http://127.0.0.1:5500";
+
+    var novaUrl = "/pages/search/search.html";
+
+    var urlAbsoluta = new URL(novaUrl, baseUrl);
+
+
+    const params = urlAbsoluta.searchParams;
+    const paramsString = Array.from(params).map(entry => `${entry[0]} ${entry[1]}`).join(', ');
+    nameParams = paramsString.split(' ')[0]
+    valueParams = paramsString.split(' ')[1]
+
+    
+    //PEGAR O PARAMETRO PARA DELETAR E DEPOIS ADICIONAR O DO POKEMON PESQUISADO
+
+    urlAbsoluta.searchParams.delete(nameParams, valueParams);
+    urlAbsoluta.searchParams.set('search', value)
+
+    window.location.href = urlAbsoluta.href;
+  } else {
+  
+    url.searchParams.set(name, value);
+  
+    window.history.pushState({}, '', url.toString());
+  
+    getParams()
+  }
+
 }
 
 lis.forEach(li => li.addEventListener('click', e => {
@@ -50,35 +93,13 @@ lis.forEach(li => li.addEventListener('click', e => {
 function cleanURL() {
   const url = new URL(window.location.href);
   const modifyURL = url.toString().split("?")[0];
+
   const newURL = new URL(modifyURL);
 
   window.history.pushState({}, '', newURL.toString());
 }
 
-cleanURL();
-
-
-// NOMES DOS POKEMONS
-// const request = async () => {
-//   let response = await fetch(baseURL);
-//   let json = await response.json();
-//   for (let i in json.pokemon) console.log(json.pokemon[i].pokemon.name)
-// };
-
-// request();
-
-
-
-
-
-
-
-
-
-
-
-
-
+// cleanURL();
 
 
 

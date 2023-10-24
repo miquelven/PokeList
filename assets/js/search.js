@@ -65,8 +65,6 @@ const paramsString = Array.from(params).map(entry => entry[0]);
 
 let typeSearch = ''
 
-console.log(paramsString[0])
-
 if (paramsString[0] == 'category') {
     const typePokemon = url.searchParams.get('category');
     requestPokemon(typePokemon)
@@ -74,21 +72,6 @@ if (paramsString[0] == 'category') {
 const namePokemon = url.searchParams.get("search")
     requestPokemon(namePokemon)
 }
-
-// const namePokemon = url.searchParams.get('search');
-
-
-
-// setTimeout(() => {
-//     const url2 = new URL(window.location.href)
-//     const params = url2.searchParams;
-    
-//     const paramsString = Array.from(params).map(entry => `${entry[0]} ${entry[1]}`).join(', ');
-//     console.log(paramsString)
-// }, 500)
-
-// requestPokemon();
-
 
 
 const requestPokemonInfos = async (url) => {
@@ -112,11 +95,6 @@ const requestPokemonInfos = async (url) => {
 
     return infos
 }
-
-// const startListener = () => {
-//     console.log('a')
-    
-// }
 
 let index = 0;
 let gifs = [];
@@ -189,10 +167,13 @@ function listener() {
         listPokemons.querySelectorAll('.card').forEach(pokemon => {
             pokemon.addEventListener("mouseover", () => {
                 pokemon.setAttribute("class", 'card cardOver')
+                console.log(index)
                 const cardHover = pokemon.getAttribute("id")
                 const img = document.querySelector('#' + cardHover).querySelector('img');
                 img.setAttribute("style", "width: 115px")
-                img.src = gifs[cardHover.split("id")[1]]
+                console.log(gifs)
+                console.log(cardHover.split('id')[1])
+                // img.src = gifs[cardHover.split("id")[1]]
             })
         
             pokemon.addEventListener('mouseout', () => {
@@ -203,16 +184,17 @@ function listener() {
                 img.src = imgs[cardHover.split("id")[1]]
             })
                     
-            pokemon.addEventListener("click", () => {
-                const cardHover = pokemon.getAttribute("id")
+            // pokemon.addEventListener("click", () => {
+            //     const cardHover = pokemon.getAttribute("id")
                 
                 
-                loadPokemonPage(pokemon.querySelector("h1").innerHTML);
-            })
+            //     loadPokemonPage(pokemon.querySelector("h1").innerHTML);
+            // })
         });
     } else {
         const cardHover = listPokemons.querySelector('.card').getAttribute("id")
         listPokemons.querySelector('.card').addEventListener("mouseover", (e) => {
+            console.log('INDEX: ' + index)
             e.currentTarget.setAttribute("class", 'card cardOver')
                 const img = document.querySelector('#' + cardHover).querySelector('img');
                 img.setAttribute("style", "width: 115px")
@@ -289,6 +271,8 @@ let haveCard = false
 async function requestPokemon(params) {
     let data = '';
     if (paramsString == 'category') {
+        console.log(params)
+        console.log(infosPokemonApi)
         const response = await fetch('https://pokeapi.co/api/v2/type/' + infosPokemonApi[params].valueParam);
         data = await response.json();
     } else {
@@ -317,9 +301,6 @@ async function requestPokemon(params) {
                 while (control < qtdDivisionPokemon) {
                     
                     
-                    console.log('posPokemonPage: ' + posPokemonPage)
-                    console.log('control: ' + control)
-                    console.log('idCard: ' + idCard)
                     
                     
                     gifs = [];
@@ -344,7 +325,8 @@ async function requestPokemon(params) {
                     createCard(data.pokemon[posPokemon], newCards[idCard])
                     index++;
                     idCard++;
-                }index = 0
+                }
+                index = 0
                         } else {
                             posPokemonPage = (posPokemonPage * pokemonPage) - 20;
                         for (let i = posPokemonPage; i < 20 * pokemonPage ; i++){
@@ -407,12 +389,6 @@ async function requestPokemon(params) {
     haveCard = true
     idCard = 0
 }
-
-// setInterval(() => {
-        
-//     }
-// }, 100)
-
 
 
 

@@ -73,7 +73,24 @@ function setInfos() {
 
     rightSideArea.querySelector("#pokemonWeight").innerHTML = pokemonWeight;
     rightSideArea.querySelector("#pokemonId").innerHTML = pokemonNumberPokedex;
-    rightSideArea.querySelector("#pokemonSkills").innerHTML = `${pokemonSkills[0]}, ${pokemonSkills[1]}` ;
+    rightSideArea.querySelector("#pokemonSkills").innerHTML = `${pokemonSkills[0]}, ${pokemonSkills[1]}`;
+    
+
+    if (localStorage.length > 0) {
+        for (let i = 0; i < localStorage.length; i++){            
+            const data = localStorage[`pokeFavorite${i}`]
+            console.log(data)
+            if (data !== undefined) {
+                
+                const dataObject = JSON.parse(data);
+
+                console.log(dataObject)
+                if (dataObject.name == pokemonName) {
+                    document.querySelector(".rightSide button").querySelector("#fav-icon").src = 'http://127.0.0.1:5500/assets/imgs/FavRed.png';
+                }
+            }
+        }
+    }
 }
 
 const buttonElement = document.querySelector(".rightSide button")
@@ -81,7 +98,45 @@ const buttonElement = document.querySelector(".rightSide button")
 buttonElement.addEventListener('click', () => {
     buttonElement.querySelector("#fav-icon").src = (buttonElement.querySelector("#fav-icon").src == 'http://127.0.0.1:5500/assets/imgs/FavRed.png')
         ? 'http://127.0.0.1:5500/assets/imgs/Fav.png' :
-        'http://127.0.0.1:5500/assets/imgs/FavRed.png'
+        'http://127.0.0.1:5500/assets/imgs/FavRed.png';
+    
+
+    if (buttonElement.querySelector("#fav-icon").src == 'http://127.0.0.1:5500/assets/imgs/FavRed.png') { // ADD STORAGE 
+        const data = {
+            id: localStorage.length + 1,
+            name: pokemonName,
+            img: pokemonImg
+        }
+        
+
+        localStorage.setItem(`pokeFavorite${localStorage.length + 1}`, JSON.stringify(data));
+    }
+    
+    
+    if (buttonElement.querySelector("#fav-icon").src == 'http://127.0.0.1:5500/assets/imgs/Fav.png') { // LIMPAR STORAGE
+    if (localStorage.length > 0) {
+        for (let i = 1; i < localStorage.length; i++){            
+            const data = localStorage[`pokeFavorite${i}`]
+            if (data !== undefined) {
+                
+                const dataObject = JSON.parse(data);
+                if (dataObject.name == pokemonName) {
+        
+                        while (localStorage[`pokeFavorite${i + 1}`] !== undefined) {
+                            let newData = localStorage[`pokeFavorite${i + 1}`]
+                            let dataFormat = JSON.parse(newData);
+                            dataFormat.id -= 1 
+                            localStorage.setItem(`pokeFavorite${i}`, JSON.stringify(dataFormat))
+                            i++
+                        }
+                        localStorage.removeItem(`pokeFavorite${i}`);
+                    
+                }
+            }
+        }
+    }
+    }
+
 })
 
 
