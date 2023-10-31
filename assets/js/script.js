@@ -12,11 +12,11 @@ const baseURL = "https://pokeapi.co/api/v2/type/1/";
 
 
 const lis = document.querySelectorAll('ul li');
-let nameParams, valueParams = '';
+let nameParamsControl, valueParamsControl = '';
 
 const navigateNewPage = () => {
   //colocar search no lugar de category
-  window.location.href = `pages/search/search.html?${nameParams}=${valueParams}`
+  window.location.href = `pages/search/search.html?${nameParamsControl}=${valueParamsControl}`
   console.log(window.location.href)
 }
 
@@ -27,8 +27,8 @@ const getParams = () => {
   const params = url.searchParams;
   console.log(params + "PARAMS")
   const paramsString = Array.from(params).map(entry => `${entry[0]} ${entry[1]}`).join(', ');
-  nameParams = paramsString.split(' ')[0]
-  valueParams = paramsString.split(' ')[1]
+  nameParamsControl = paramsString.split(' ')[0]
+  valueParamsControl = paramsString.split(' ')[1]
 
   navigateNewPage(paramsString);
 }
@@ -62,13 +62,13 @@ window.location.href = urlAbsoluta.href;
 
     const params = urlAbsoluta.searchParams;
     const paramsString = Array.from(params).map(entry => `${entry[0]} ${entry[1]}`).join(', ');
-    nameParams = paramsString.split(' ')[0]
-    valueParams = paramsString.split(' ')[1]
+    nameParamsControl = paramsString.split(' ')[0]
+    valueParamsControl = paramsString.split(' ')[1]
 
     
     //PEGAR O PARAMETRO PARA DELETAR E DEPOIS ADICIONAR O DO POKEMON PESQUISADO
 
-    urlAbsoluta.searchParams.delete(nameParams, valueParams);
+    urlAbsoluta.searchParams.delete(nameParamsControl, valueParamsControl);
     urlAbsoluta.searchParams.set('search', value)
 
     window.location.href = urlAbsoluta.href;

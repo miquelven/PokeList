@@ -11,8 +11,9 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    overflow-x:hidden;
-    background:#a8a8a843
+    background: rgb(255,255,255);
+background: radial-gradient(circle, rgba(255,255,255,0.6228448275862069) 9%, rgba(0,0,0,0.6594827586206897) 100%);
+overflow-x:hidden;
 }
 
 input,
@@ -27,7 +28,8 @@ header {
     align-items: center;
     padding: 30px;
     border-radius: 10px;
-    width: 100%
+    width: 100%;
+    color:#fff
 }
 
 
@@ -52,15 +54,16 @@ header h1 {
 
 .inputArea #searchPokemonInput {
     outline: none;
-    border-bottom: 2px solid #000;
+    border-bottom: 2px solid #ffffff;
     padding: 20px 60px 20px 0px;
-    opacity: .3;
+    /* opacity: .3; */
     transition: all linear 150ms;
-    font-size:1.1rem
+    font-size:1.1rem;
+    color: #fff;
 }
 
 #searchPokemonInput::placeholder {
-    color: #000
+    color: #ffffff
 }
 
 #searchPokemonInput:focus,
@@ -74,8 +77,9 @@ header h1 {
 }
 
 .inputArea button img {
-    opacity: .3;
-    cursor: pointer
+    /* opacity: .3; */
+    cursor: pointer;
+    width: 30px;
 }
 
 header span {
@@ -93,7 +97,7 @@ header span:hover {
 }
 
 header span img {
-    width: 55px
+    width: 55px;
 }
 
 main {

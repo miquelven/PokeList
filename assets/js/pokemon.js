@@ -27,7 +27,9 @@ async function requestPokemonInfos() {
     }
     pokemonName = paramsPokemon;
     pokemonHeight = (data.height / 10).toString();
-    pokemonWeight = parseInt(data.weight / 10);
+    pokemonWeight = parseFloat(data.weight / 10);
+    console.log(data.height)
+    console.log(data.weight / 10+ " peso")
     pokemonSkills = data.abilities.map(abilitie => abilitie.ability.name)
     pokemonNumberPokedex = data.id;
     pokemonGif = data.sprites.versions['generation-v']['black-white']['animated']['front_default'];
@@ -59,7 +61,8 @@ function setInfos() {
 
 
     leftSideArea.querySelector("img").src = (pokemonGif == null) ? pokemonImg : pokemonGif;
-    
+
+
     
     const rightSideArea = document.querySelector(".rightSide");
     rightSideArea.querySelector("h1").innerHTML = pokemonName;
@@ -73,18 +76,24 @@ function setInfos() {
 
     rightSideArea.querySelector("#pokemonWeight").innerHTML = pokemonWeight;
     rightSideArea.querySelector("#pokemonId").innerHTML = pokemonNumberPokedex;
-    rightSideArea.querySelector("#pokemonSkills").innerHTML = `${pokemonSkills[0]}, ${pokemonSkills[1]}`;
+    console.log(pokemonSkills.length)
+    for (let i = 0; i < pokemonSkills.length; i++){
+        if (pokemonSkills[i] == undefined) return;
+        if (rightSideArea.querySelector("#pokemonSkills").innerHTML == '') {
+            rightSideArea.querySelector("#pokemonSkills").innerHTML += pokemonSkills[0];
+        } else {
+            rightSideArea.querySelector("#pokemonSkills").innerHTML += ' | ' + pokemonSkills[i];
+        }
+    }
     
 
     if (localStorage.length > 0) {
-        for (let i = 0; i < localStorage.length; i++){            
+        for (let i = 0; i < localStorage.length + 1; i++){            
             const data = localStorage[`pokeFavorite${i}`]
-            console.log(data)
             if (data !== undefined) {
                 
                 const dataObject = JSON.parse(data);
 
-                console.log(dataObject)
                 if (dataObject.name == pokemonName) {
                     document.querySelector(".rightSide button").querySelector("#fav-icon").src = 'http://127.0.0.1:5500/assets/imgs/FavRed.png';
                 }
@@ -97,7 +106,7 @@ const buttonElement = document.querySelector(".rightSide button")
 
 buttonElement.addEventListener('click', () => {
     buttonElement.querySelector("#fav-icon").src = (buttonElement.querySelector("#fav-icon").src == 'http://127.0.0.1:5500/assets/imgs/FavRed.png')
-        ? 'http://127.0.0.1:5500/assets/imgs/Fav.png' :
+        ? 'http://127.0.0.1:5500/assets/imgs/favBlack.png' :
         'http://127.0.0.1:5500/assets/imgs/FavRed.png';
     
 
@@ -113,9 +122,9 @@ buttonElement.addEventListener('click', () => {
     }
     
     
-    if (buttonElement.querySelector("#fav-icon").src == 'http://127.0.0.1:5500/assets/imgs/Fav.png') { // LIMPAR STORAGE
+    if (buttonElement.querySelector("#fav-icon").src == 'http://127.0.0.1:5500/assets/imgs/favBlack.png') { // LIMPAR STORAGE
     if (localStorage.length > 0) {
-        for (let i = 1; i < localStorage.length; i++){            
+        for (let i = 1; i < localStorage.length + 1; i++){            
             const data = localStorage[`pokeFavorite${i}`]
             if (data !== undefined) {
                 

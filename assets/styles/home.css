@@ -1,38 +1,38 @@
 
 section ul{
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     align-items:center;
     flex-wrap:wrap;
-    gap:50px;
+    gap:100px;
     width:80vw;
 }
 
 section ul li{
+    /* width: 29%;s */
+    /* min-width:200px; */
     list-style:none;
-    display: block;
-    height:230px;
-    width: 29%;
-    min-width:200px;
-    border-radius:20px;
+    height:170px; 
     display: flex;
     align-items:center;
     justify-content:center;
-    border-radius:40px;
-    border: 3px solid #999;
+    border: 12px groove #9999996b;
+    border-radius:20px;
     font-size:1.7rem;
     font-weight:bold;
     color:#fff;
     letter-spacing:4px;
     cursor:pointer;
-    box-shadow: 6px 6px 10px #999;
+    box-shadow: 6px 6px 10px #6f6f6f;
     transition:all linear 150ms;
+    /* transform: scale(.8); */
     text-transform:uppercase;
 }
 
 section ul li:hover{
-    transform: translateX(-5px) translateY(5px);
-    box-shadow: 10px 10px 15px #999;
-    filter:brightness(.7);
+    transform: scale(1.1);
+    box-shadow: 10px 10px 15px #626262;
+    filter:brightness(1.1);
 }
 
 section ul li.typeWater{

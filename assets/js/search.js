@@ -16,12 +16,12 @@ const infosPokemonApi = {
         valueParam: 5
     },
     'rock': {
-        valueParam:6
+        valueParam: 6
     },
     'bug': {
-        valueParam:7
+        valueParam: 7
     },
-    'ghost':{
+    'ghost': {
         valueParam: 8
     },
     'steel': {
@@ -57,15 +57,24 @@ const infosPokemonApi = {
 }
 
 
+
+// COMEÇAR A ENTENDER E MUDAR DAQUI!!!
+
+
+
+
+let haveCard = false
+
+
 const url = new URL(window.location.href);
 const listPokemons = document.querySelector(".listPokemons");
 const params = url.searchParams;
 
-const paramsString = Array.from(params).map(entry => entry[0]);
+const nameParams = Array.from(params).map(entry => entry[0]);
 
 let typeSearch = ''
 
-if (paramsString[0] == 'category') {
+if (nameParams[0] == 'category') {
     const typePokemon = url.searchParams.get('category');
     requestPokemon(typePokemon)
 } else {
@@ -73,11 +82,15 @@ const namePokemon = url.searchParams.get("search")
     requestPokemon(namePokemon)
 }
 
+let index = 0;
+let gifs = [];
+let imgs = []
+
 
 const requestPokemonInfos = async (url) => {
     let data = '';
     let infos = '';
-    if (paramsString == 'category') {
+    if (nameParams == 'category') {
         const response = await fetch(url)
         data = await response.json();
         infos = {
@@ -95,117 +108,90 @@ const requestPokemonInfos = async (url) => {
 
     return infos
 }
-
-let index = 0;
-let gifs = [];
-let imgs = []
-
+let urls = []
+imgs = []
+gifs = []
+types = []
 const createCard = async (data, card) => {
-    const h1 = card.querySelector("h1")
+    if (card == undefined) return;
+    const h1 = card.querySelector("h1");
     const img = card.querySelector(".imgArea img");
     const spanType = card.querySelector(".type");
-    card.setAttribute('id', 'id' + index)
 
-    if (paramsString == 'category') {
-        h1.innerHTML = data.pokemon.name;
-        const { imgData, gif, types } = await requestPokemonInfos(data.pokemon.url)
-        gifs.push(gif);
-        imgs.push(imgData)
-        img.src = imgData;
-        spanType.innerHTML = ''
-        
-        if (types.length > 1) {
-            // for (let i in types) spanType.innerHTML += ` ${types[i].type.name}`
-            types.forEach(type => {
-                const imgEl = document.createElement('img');
-                imgEl.src = `../../assets/imgs/typeIcons/${typesData[type.type.name]}`            
-                spanType.appendChild(imgEl)
-            })
+    h1.innerHTML = data.name;
+    if (data.sprites.front_default !== null) img.src = data.sprites.front_default;
+    types.push(data.types);
     
+    spanType.innerHTML = ''
+
+    if (types[0].length > 1) {
+            for (let i = 0; i < types[0].length;i++) {
+            const imgEl = document.createElement("img");
+                imgEl.src = `../../assets/imgs/typeIcons/${types[0][i].type.name}.svg`
+                spanType.append(imgEl)
+            }
         } else {
-            const imgEl = document.createElement('img');
-            imgEl.src = `../../assets/imgs/typeIcons/${typesData[types[0].type.name]}`            
+            const imgEl = document.createElement("img");
+            imgEl.src = `../../assets/imgs/typeIcons/${types[0][0].type.name}.svg`
             spanType.append(imgEl)
         }
-    } else {
-        h1.innerHTML = data.name;
-        const { imgData, gif, types } = await requestPokemonInfos(data);
-        gifs.push(gif);
-        imgs.push(imgData)
-        img.src = imgData;
-        spanType.innerHTML = ''
-
-        if (types.length > 1) {
-            // for (let i in types) spanType.innerHTML += ` ${types[i].type.name}`
-            types.forEach(type => {
-                const imgEl = document.createElement('img');
-                imgEl.src = `../../assets/imgs/typeIcons/${typesData[type.type.name]}`            
-                spanType.appendChild(imgEl)
-            })
+        imgs.push(data.sprites.front_default)
+    gifs.push(data.sprites.versions['generation-v']['black-white']['animated']['front_default'])
     
-        } else {
-            const imgEl = document.createElement('img');
-            imgEl.src = `../../assets/imgs/typeIcons/${typesData[types[0].type.name]}`            
-            spanType.append(imgEl)
-        }
-    }
-
-    index++;
-
     if (haveCard) {
-        listener()
-        return;         
+        listener(imgs, gifs);
+        return;
     }
-    listPokemons.append((card))
 
-
+    listPokemons.append(card);
 }
 
-function listener() {
+
+
+function listener(imgs, gifs) {
     // setInterval( () => {
-    if (paramsString == 'category') {
+    console.log("listener")
+    if (nameParams == 'category') {
         listPokemons.querySelectorAll('.card').forEach(pokemon => {
             pokemon.addEventListener("mouseover", () => {
                 pokemon.setAttribute("class", 'card cardOver')
-                console.log(index)
                 const cardHover = pokemon.getAttribute("id")
-                const img = document.querySelector('#' + cardHover).querySelector('img');
-                img.setAttribute("style", "width: 115px")
-                console.log(gifs)
-                console.log(cardHover.split('id')[1])
-                // img.src = gifs[cardHover.split("id")[1]]
+                console.log(cardHover + " CARDHOVER")
+                const imgEl = document.querySelector('#' + cardHover).querySelector('img');
+                imgEl.setAttribute("style", "width: 87px")
+                
+                imgEl.src = gifs[cardHover.split('id')[1]]
             })
         
             pokemon.addEventListener('mouseout', () => {
                 pokemon.setAttribute("class", 'card')
                 const cardHover = pokemon.getAttribute("id")
-                const img = document.querySelector('#' + cardHover).querySelector('img');
-                img.setAttribute("style", 'width: 300px')
-                img.src = imgs[cardHover.split("id")[1]]
+                const imgEl = document.querySelector('#' + cardHover).querySelector('img');
+                imgEl.setAttribute("style", 'width: 300px')
+                imgEl.src = imgs[cardHover.split("id")[1]]
             })
                     
-            // pokemon.addEventListener("click", () => {
-            //     const cardHover = pokemon.getAttribute("id")
-                
-                
-            //     loadPokemonPage(pokemon.querySelector("h1").innerHTML);
-            // })
+            pokemon.addEventListener("click", () => {
+                loadPokemonPage(pokemon.querySelector("h1").innerHTML);
+            })
+
         });
     } else {
+        // PROBLEMA NO STYLE DO SEARCH ESTÁ AQUI
         const cardHover = listPokemons.querySelector('.card').getAttribute("id")
         listPokemons.querySelector('.card').addEventListener("mouseover", (e) => {
-            console.log('INDEX: ' + index)
             e.currentTarget.setAttribute("class", 'card cardOver')
-                const img = document.querySelector('#' + cardHover).querySelector('img');
-                img.setAttribute("style", "width: 115px")
-                img.src = gifs[cardHover.split("id")[1]]
+            const imgEl = document.querySelector('#' + cardHover).querySelector('img');
+            imgEl.setAttribute("style", "width: 87px")
+            imgEl.src = gifs[cardHover.split("id")[1]]
             })
         
             listPokemons.addEventListener('mouseout', (e) => {
-                e.currentTarget.setAttribute("class", 'card')
-                const img = document.querySelector('#' + cardHover).querySelector('img');
-                img.setAttribute("style", 'width: 300px')
-                img.src = imgs[cardHover.split("id")[1]]
+                e.target.closest('.card').setAttribute("class", 'card')
+                const imgEl = document.querySelector('#' + cardHover).querySelector('img');
+                imgEl.setAttribute("style", 'width: 150px')
+                imgEl.src = imgs[cardHover.split('id')[1]]
+
             })
                     
             listPokemons.addEventListener("click", (e) => {
@@ -220,20 +206,23 @@ const pagePokemonArea = document.querySelector(".pagePokemonArea");
 
 const createPagesPokemon = (qtdDivisionPokemon, qtdDivisionPokemonRest) => {
 
-    if (haveCard) return;
+    if (pagePokemonArea.innerHTML.length !== 0) return;
 
     for (let i = 1; i < qtdDivisionPokemon + 1; i++) {
         pagePokemonArea.innerHTML += `<button>${i}</button>`
     }
     if (qtdDivisionPokemonRest > 0) pagePokemonArea.innerHTML += `<button>${pagePokemonArea.children.length + 1}</button>`;
 
-    if (paramsString == 'category') {
+    if (nameParams == 'category') {
         pagePokemonArea.querySelectorAll("button").forEach(button => button.addEventListener("click", (e) => {
-            pokemonPage = ''
+            console.log("oi")
             pokemonPage = e.target.innerHTML;
             gifs = [];
             imgs = [];
-            requestPokemon();
+            types =  []
+            //  CHAMA UMA NOVA REQUISIÇÃO COM NOVOS POKEMONS DO MESMO TIPO
+            const typePokemon = url.searchParams.get('category');
+            requestPokemon(typePokemon)
         }))
     } else {
         pagePokemonArea.querySelector("button").addEventListener("click", (e) => {
@@ -249,8 +238,10 @@ let qtdPokemons = 0;
 let qtdDivisionPokemon = 0
 let qtdDivisionPokemonRest = 0
 
+
+// DAR UMA OLHADA AQUI PARA ARRUMAR OS NUMEROS DA PAGINAÇÃO
 const qtdPokemonControll = (data) => {
-    if (paramsString == 'category') {
+    if (nameParams == 'category') {
         qtdPokemons = data.pokemon.length;
         if (qtdPokemons % 20 == 0) {
             qtdDivisionPokemon = parseInt(qtdPokemons / 20)
@@ -265,14 +256,29 @@ const qtdPokemonControll = (data) => {
     }
 }
 
-let haveCard = false
+async function mountCard(urls, cards) {
+    if (nameParams == 'search') {
+        const response = await fetch(urls);
+        const data = await response.json();
+        createCard(data, cards)
+    } else {
+        const responses = await Promise.all(urls.map(url => fetch(url).then(response => response.json())));
+    
+    responses.forEach((data, i) => {
+        const card = cards[i];
+        if (card == undefined) return;
+        createCard(data, card);
+    });
+    }
+}
+
+
+
 
 
 async function requestPokemon(params) {
     let data = '';
-    if (paramsString == 'category') {
-        console.log(params)
-        console.log(infosPokemonApi)
+    if (nameParams == 'category') {
         const response = await fetch('https://pokeapi.co/api/v2/type/' + infosPokemonApi[params].valueParam);
         data = await response.json();
     } else {
@@ -280,11 +286,10 @@ async function requestPokemon(params) {
         data = await response.json();
     }
 
-    console.log(data)
 
     let idCard = 0;
 
-    
+    // TEM CARDS
     if (haveCard) {
         if (qtdDivisionPokemonRest > 0 & pokemonPage == pagePokemonArea.children.length) {
             listPokemons.innerHTML = ''
@@ -298,15 +303,21 @@ async function requestPokemon(params) {
                 let control = 0;
                 idCard = 0
                 
-                while (control < qtdDivisionPokemon) {
+                gifs = [];
+                imgs = [];
+                urls = [];
+                controller = data.pokemon.length - qtdDivisionPokemonRest
+                for (controller; controller < data.pokemon.length; controller++){
+                    urls.push(data.pokemon[controller].pokemon.url)   
+                }
+                haveCard = true
+                while (control < qtdDivisionPokemonRest) {
                     
                     
-                    
-                    
-                    gifs = [];
-                    imgs = [];
-                    createCard(data.pokemon[posPokemonPage], newCards[idCard], index)
-                    index++;
+                    newCards[control].setAttribute("id", `id${control}`)
+                    mountCard(urls, newCards)
+                    // createCard(data.pokemon[posPokemonPage], newCards[idCard], index)
+                    // index++;
                     posPokemonPage++;
                     idCard++    
                     control++;
@@ -315,27 +326,46 @@ async function requestPokemon(params) {
                 posPokemonPage = 20;
                 control = 0
             }, 1000)
+            haveCard = false
 
         } else {
             const newCards = document.querySelectorAll(".card");
+            
+            if (newCards.length < 20) {
+                listPokemons.innerHTML = '';
+                setTimeout(()=>loadCard(20), 1800)
+                // loadCard(20)
+            }
+            // voltando para o primeiro
             if (pokemonPage == 1) {
                 for (let posPokemon = 0; posPokemon < 20 * pokemonPage; posPokemon++) {
                     gifs = [];
                     imgs = [];
-                    createCard(data.pokemon[posPokemon], newCards[idCard])
+                    
+                    setTimeout(()=>createCard(data.pokemon[posPokemon], newCards[idCard]), 300 )
+                    // createCard(data.pokemon[posPokemon], newCards[idCard])
                     index++;
                     idCard++;
                 }
                 index = 0
-                        } else {
+            } else {
+                urls = []
+                const cards = document.querySelectorAll(".card");
+                console.log(cards.forEach(card => console.log(card)))
                             posPokemonPage = (posPokemonPage * pokemonPage) - 20;
-                        for (let i = posPokemonPage; i < 20 * pokemonPage ; i++){
+                            types = []
                             gifs = [];
                             imgs = [];
-                            createCard(data.pokemon[i], newCards[idCard], index)
+                        for (let i = posPokemonPage; i < 20 * pokemonPage; i++){
+                            // ARRUMAR AQUI
+
+                            urls.push(data.pokemon[i].pokemon.url);
                             index++;
                             idCard++    
                 }
+
+                mountCard(urls, cards);
+
                 index = 0
                             posPokemonPage = 20;
                     }
@@ -350,12 +380,16 @@ async function requestPokemon(params) {
     } else {
         index = 0;
         gifs = []
-        if (paramsString == 'search') {
+        if (nameParams == 'search') {
             loadCard(1);
             setTimeout(() => {
                 const card = document.querySelector(".card");
                 for (let posPokemon = 0; posPokemon < 1; posPokemon++){
-                    createCard(data, card)
+                    
+                    pokemonName = url.searchParams.get("search")
+                    card.setAttribute("id", 'id0')
+                    mountCard('https://pokeapi.co/api/v2/pokemon/'+pokemonName, card)
+                    // createCard(data, card)
                     index++
                     idCard++;
                 } 
@@ -363,35 +397,43 @@ async function requestPokemon(params) {
     
             }, 1000) 
         }else {
+            const cards2 = document.querySelectorAll(".card");
+            if (cards2.length < 20) {
+                listPokemons.innerHTML = ''
+            }
             loadCard(20);
             setTimeout(() => {
                 const cards = document.querySelectorAll(".card");
-                for (let posPokemon = 0; posPokemon < 20 * pokemonPage; posPokemon++){
-                    createCard(data.pokemon[posPokemon], cards[idCard])
+                console.log(pokemonPage)
+                let valueControl = 20 * pokemonPage - 20
+                let urls = []
+                for (let posPokemon = valueControl; posPokemon < 20 * pokemonPage; posPokemon++){
+                    
+                    
+                    cards[index].setAttribute('id', `id${index}`)
+                    urls.push(data.pokemon[posPokemon].pokemon.url);
                     index++
-                    idCard++;
                 } 
+                mountCard(urls, cards);
+                
                 index = 0
-    
-            }, 1000) 
+                
+            }, 1800) 
         }
         
     }
 
     
-    
+
     qtdPokemonControll(data)
-    if (paramsString == 'search') {
-        document.querySelector("#results").innerHTML = '0';
+    if (nameParams == 'search') {
+        document.querySelector("#results").innerHTML = '1';
     } else {
         document.querySelector("#results").innerHTML = data.pokemon.length;
     }
     haveCard = true
     idCard = 0
 }
-
-
-
 
 //não voltava
 const urlCategory = new URL(window.location.href);

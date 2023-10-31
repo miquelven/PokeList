@@ -4,6 +4,14 @@ const intervalRender = setInterval(() => {
     }
 }, 100)
 
+const findPokemon = () => {
+    const inputEl = document.querySelector("#searchPokemonInput")
+        if (inputEl.value !== ''.trim()) {
+            changeURL('search', inputEl.value)
+            //mudar url category por search
+        }
+}
+
 function featuresHeader() {
     clearInterval(intervalRender);
     const logoEl = document.querySelector("#logo")
@@ -20,12 +28,12 @@ function featuresHeader() {
 
 
     inputImgEl.addEventListener("click", () => {
-        const inputEl = inputImgEl.parentElement.parentElement.querySelector("input")
-        if (inputEl.value !== ''.trim()) {
-            
-            changeURL('search', inputEl.value)
-            //mudar category por search
-        }
+        findPokemon()
+    })
+
+    document.addEventListener("keydown", (e) => {
+        if (e.key.toLowerCase() == 'enter') findPokemon()
+        
     })
 
     favoriteEl.addEventListener('click', () => {
