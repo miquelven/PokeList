@@ -1,0 +1,108 @@
+
+section ul{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    align-items:center;
+    flex-wrap:wrap;
+    gap:100px;
+    width:80vw;
+}
+
+section ul li{
+    /* width: 29%;s */
+    /* min-width:200px; */
+    list-style:none;
+    height:170px; 
+    display: flex;
+    align-items:center;
+    justify-content:center;
+    border: 12px groove #9999996b;
+    border-radius:20px;
+    font-size:1.7rem;
+    font-weight:bold;
+    color:#fff;
+    letter-spacing:4px;
+    cursor:pointer;
+    box-shadow: 6px 6px 10px #6f6f6f;
+    transition:all linear 150ms;
+    /* transform: scale(.8); */
+    text-transform:uppercase;
+}
+
+section ul li:hover{
+    transform: scale(1.1);
+    box-shadow: 10px 10px 15px #626262;
+    filter:brightness(1.1);
+}
+
+section ul li.typeWater{
+    background: linear-gradient(127deg, rgba(255,255,255,0.12068965517241381) 2%, rgba(19,0,255,0.7974137931034483) 46%, rgba(255,255,255,0.7974137931034483) 90%);
+}
+
+section ul li.typeBug{
+    background: linear-gradient(127deg, rgba(255,255,255,0.12068965517241381) 2%, rgba(0,135,34,0.7974137931034483) 46%, rgba(255,255,255,0.7974137931034483) 90%);
+}
+
+section ul li.typeFlying{
+    background: linear-gradient(127deg, rgba(255,255,255,0.12068965517241381) 2%, rgba(94,168,163,0.7974137931034483) 46%, rgba(255,255,255,0.7974137931034483) 90%);
+}
+
+section ul li.typeGround{
+    background: linear-gradient(127deg, rgba(255,255,255,0.12068965517241381) 2%, rgba(177,148,100,0.7974137931034483) 46%, rgba(255,255,255,0.7974137931034483) 90%);
+}
+
+section ul li.typeFairy{
+    background: linear-gradient(127deg, rgba(255,255,255,0.12068965517241381) 2%, rgba(223, 38, 196, 0.797) 46%, rgba(255,255,255,0.7974137931034483) 90%);
+}
+
+section ul li.typeGrass{
+    background: linear-gradient(127deg, rgba(255,255,255,0.12068965517241381) 2%, rgba(86,210,47,0.7974137931034483) 46%, rgba(255,255,255,0.7974137931034483) 90%);
+}
+
+section ul li.typeDragon{
+    background: linear-gradient(127deg, rgba(255,255,255,0.12068965517241381) 2%, rgba(255,135,0,0.7974137931034483) 46%, rgba(255,255,255,0.7974137931034483) 90%);
+}
+
+section ul li.typeNormal{
+    background: linear-gradient(127deg, rgba(255,255,255,0.12068965517241381) 2%, rgba(162, 162, 162, 0.797) 46%, rgba(255,255,255,0.7974137931034483) 90%);
+}
+
+section ul li.typeFighting{
+    background: linear-gradient(127deg, rgba(255,255,255,0.12068965517241381) 2%, rgba(145, 93, 93, 0.797) 46%, rgba(255,255,255,0.7974137931034483) 90%);
+}
+
+section ul li.typePoison{
+    background: linear-gradient(127deg, rgba(255,255,255,0.12068965517241381) 2%, rgba(132, 2, 162, 0.797) 46%, rgba(255,255,255,0.7974137931034483) 90%);
+}
+
+section ul li.typeRock{
+    background: linear-gradient(127deg, rgba(255,255,255,0.12068965517241381) 2%, rgba(28, 28, 28, 0.797) 46%, rgba(255,255,255,0.7974137931034483) 90%);
+}
+
+section ul li.typeGhost{
+    background: linear-gradient(127deg, rgba(255,255,255,0.12068965517241381) 2%, rgba(34, 47, 112, 0.797) 46%, rgba(255,255,255,0.7974137931034483) 90%);
+}
+
+section ul li.typeSteel{
+    background: linear-gradient(127deg, rgba(255,255,255,0.12068965517241381) 2%, rgba(4, 58, 112, 0.465) 46%, rgba(255,255,255,0.7974137931034483) 90%);
+}
+
+section ul li.typeFire{
+    background: linear-gradient(127deg, rgba(255,255,255,0.12068965517241381) 2%, rgba(237, 9, 9, 0.689) 46%, rgba(255,255,255,0.7974137931034483) 90%);
+}
+
+section ul li.typeElectric{
+    background: linear-gradient(127deg, rgba(255,255,255,0.12068965517241381) 2%, rgba(184, 181, 3, 0.761) 46%, rgba(255,255,255,0.7974137931034483) 90%);
+}
+
+section ul li.typePsychic{
+    background: linear-gradient(127deg, rgba(255,255,255,0.12068965517241381) 2%, rgba(131, 92, 130, 0.761) 46%, rgba(255,255,255,0.7974137931034483) 90%);
+}
+
+section ul li.typeIce{
+    background: linear-gradient(127deg, rgba(255,255,255,0.12068965517241381) 2%, rgba(114, 176, 185, 0.618) 46%, rgba(255,255,255,0.7974137931034483) 90%);
+}
+
+section ul li.typeDark{
+    background: linear-gradient(127deg, rgba(255,255,255,0.12068965517241381) , rgb(0, 0, 0) 46%, rgba(255,255,255,0.7974137931034483) 90%);
+}
